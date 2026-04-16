@@ -169,7 +169,14 @@ def posthook(url: str, body: dict[str, Any]) -> None:
     req = urllib.request.Request(
         url,
         data=data,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": (
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+            ),
+        },
         method="POST",
     )
     try:
@@ -339,7 +346,7 @@ def main() -> None:
     if not cfgpath.is_file():
         print(
             f"Missing config: {cfgpath}\n"
-            f"Copy config.example.json to config.json and edit (especially discord_webhook_url)."
+            f"Create config.json next to monitor.py (see README for keys)."
         )
         raise SystemExit(1)
     cfg = settings.load(cfgpath)
